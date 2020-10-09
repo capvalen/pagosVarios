@@ -124,7 +124,7 @@
 	</style>
 
 	<div class="container d-print-none" >
-		<h1 class="display-4 text-center mt-3">Guía para Pagos Varios - SUNAT</h1>
+		<h1 class="display-4 text-center mt-3">Guía para Pagos Varios - SUNAT.</h1>
 	</div>
 	<div class="container-fluid mt-3 noSelect " id="app">
 		<div class="row">
@@ -139,10 +139,6 @@
 				</select>
 				<input type="text" class="form-control" :class="{'is-invalid': rucMal, 'is-valid': !rucMal}" id="txtRuc" placeholder="Número de R.U.C." autocomplete="off" v-model="ruc" max_length="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 				<input type="text" id="txtPeriodo" class="form-control" placeholder="Mes y Año" readonly>
-				<div id="divComboBusqueda">
-					<select id="sltTributos" class="form-control selectpicker" data-live-search="true" title="Cod. Tributo, concepto o multa" v-model="tipTributo">
-					</select>
-				</div>
 				<div class="input-group my-4">
 					<div class="input-group-prepend">
 						<span class="input-group-text">S/</span>
@@ -150,6 +146,13 @@
 					<input type="number" class="form-control" id="txtMontoAPagar" placeholder="Monto a pagar" step=1 v-model="monto">
 					
 				</div>
+
+				<div id="divComboBusqueda">
+					<select id="sltTributos" class="form-control selectpicker" data-live-search="true" title="Cod. Tributo, concepto o multa" v-model="tipTributo">
+						<?php include 'combo.php'; ?>
+					</select>
+				</div>
+			
 				<div>
 					<button class="btn btn-outline-primary my-2" v-on:click="imprimir()"><i class="icofont-print"></i> Imprimir</button>
 					<button class="btn btn-outline-secondary my-2" v-on:click="guardar()"><i class="icofont-file-pdf"></i> Guardar PDF</button>
@@ -300,10 +303,17 @@
 			}
 		},
 		mounted(){
-			$('#sltTributos').load('./combo.html', function(){
+			/* $('#sltTributos').load('./combo.html', function(){
 				$('.selectpicker').selectpicker('reload');
 				$('.selectpicker').selectpicker('val', -1);
-			});
+			}); */
+			/* $.ajax({url: './combo.php', type: 'POST', data: { }}).done(function(resp) {
+				$('#sltTributos').html(resp);
+				console.log( 'rellenado' );
+				
+			}); */
+			$('#sltTributos').selectpicker('reload');
+			$('#sltTributos').selectpicker('val', -1);
 			var d = new Date();
 			let mo = d.getMonth();
 			
@@ -322,8 +332,8 @@
 			});
 			$('#app').on('change', '#txtPeriodo', function (e) {
 				let tempo = $('#txtPeriodo').val()
-				this.mes = tempo.substring(0,2);
-				this.anio = tempo.substring(3,7);
+				app.mes = tempo.substring(0,2);
+				app.anio = tempo.substring(3,7);
 			});
 		}
 	});
