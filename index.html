@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Guía pagos varios - Infocat Soluciones</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/bootstrap-datepicker3.css?version=1.1">
+	<link rel="stylesheet" href="css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="icofont.min.css">
+
+</head>
+<body>
+	<style>
+		select, input{
+			margin: 20px 0;
+		}
+		#txtMontoAPagar{
+			margin: 0;
+		}
+		#divComboBusqueda .dropdown-toggle{
+			color: #495057;
+			background-color: #fff;
+			background-clip: padding-box;
+			border: 1px solid #ced4da;
+			border-radius: .25rem;
+			transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+		}
+		.bootstrap-select .dropdown-menu{
+			max-width: 100%!important;
+		}
+		.noSelect {
+			-webkit-touch-callout: none; /* iOS Safari */
+				-webkit-user-select: none; /* Safari */
+				-khtml-user-select: none; /* Konqueror HTML */
+					-moz-user-select: none; /* Old versions of Firefox */
+						-ms-user-select: none; /* Internet Explorer/Edge */
+								user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+		}
+		#txtMontoAPagar{
+			border-left: 0px solid transparent!important;
+		}
+		.input-group-text{
+			background-color: transparent;
+		}
+		.form-control:disabled, .form-control[readonly]{
+			background-color: #ffffff;
+		}
+		h1, .tFlotante{ color: #057dcc;}
+		#divImagen{
+			position: relative;
+		}
+		.tFlotante{position: absolute;}
+		
+		@media (max-width: 4000px) {
+			#primX{ top: calc(23.5%); left: calc(3.6%); }
+			#seguX{ top: calc(26.1%); left: calc(3.6%); }
+			#tercX{ top: calc(29%); left: calc(3.6%); }
+			#cuarX{ top: calc(31.9%); left: calc(3.6%); }
+			#rucX{ top: 39%; left: 16rem; font-size: 1.1rem }
+			#mesX{ top: 48%; left: 16rem; font-size: 1.1rem }
+			#anioX{ top: 48%; left: 18.5rem; font-size: 1.1rem }
+			#tribX{ top: 53.5%; left: 16rem; font-size: 1.1rem }
+			#montX{ top: 61.5%; left: 16rem; font-size: 1.1rem }
+			#decimales{font-size: 0.8rem}
+		}
+		@media (max-width: 1500px) {
+			#primX{ top: calc(23.2%); left: calc(5.5%); }
+			#seguX{ top: calc(25.9%); left: calc(5.5%); }
+			#tercX{ top: calc(28.8%); left: calc(5.5%); }
+			#cuarX{ top: calc(31.8%); left: calc(5.5%); }
+			#rucX{ top: 39%; left: 27%; font-size: 1.1rem }
+			#mesX{ top: 48%; left: 27%; font-size: 1.1rem }
+			#anioX{ top: 48%; left: 33%; font-size: 1.1rem }
+			#tribX{ top: 53.5%; left: 27%; font-size: 1.1rem }
+			#montX{ top: 61.5%; left: 27%; font-size: 1.1rem }
+			#decimales{font-size: 0.8rem}
+		}
+		
+		@media (max-width: 1354px) {
+			#primX{ top: calc(23.2%); left: calc(5.5%); }
+			#seguX{ top: calc(25.9%); left: calc(5.5%); }
+			#tercX{ top: calc(28.8%); left: calc(5.5%); }
+			#cuarX{ top: calc(31.8%); left: calc(5.5%); }
+			#rucX{ top: 39%; left: 30%; font-size: 1.1rem }
+			#mesX{ top: 48%; left: 30%; font-size: 1.1rem }
+			#anioX{ top: 48%; left: 36%; font-size: 1.1rem }
+			#tribX{ top: 53.5%; left:30%; font-size: 1.1rem }
+			#montX{ top: 61.5%; left: 30%; font-size: 1.1rem }
+			#decimales{font-size: 0.8rem}
+		}
+		@media (max-width: 1320px) {
+			#primX{ top: calc(23%); left: calc(5.6%); }
+			#seguX{ top: calc(25.7%); left: calc(5.6%); }
+			#tercX{ top: calc(28.8%); left: calc(5.6%); }
+			#cuarX{ top: calc(31.8%); left: calc(5.6%); }
+			#rucX{ top: 38.5%; left: 33%; font-size: 1.1rem }
+			#mesX{ top: 47.5%; left: 31%; font-size: 1.1rem }
+			#anioX{ top: 47.5%; left: 37%; font-size: 1.1rem }
+			#tribX{ top: 53.5%; left:31%; font-size: 1.1rem }
+			#montX{ top: 61%; left: 31%; font-size: 1.1rem }
+			#decimales{font-size: 0.8rem}
+		}
+		@media (max-width: 549px) {
+			#divImagen{
+				display: none;
+			}
+		}
+		@media print{
+			#primX{ top: calc(23%); left: calc(5.6%); }
+			#seguX{ top: calc(25.7%); left: calc(5.6%); }
+			#tercX{ top: calc(28.8%); left: calc(5.6%); }
+			#cuarX{ top: calc(31.8%); left: calc(5.6%); }
+			#rucX{ top: 38.5%; left: 33%; font-size: 1.1rem }
+			#mesX{ top: 47.5%; left: 31%; font-size: 1.1rem }
+			#anioX{ top: 47.5%; left: 37%; font-size: 1.1rem }
+			#tribX{ top: 53.5%; left:31%; font-size: 1.1rem }
+			#montX{ top: 61%; left: 31%; font-size: 1.1rem }
+			#decimales{font-size: 0.8rem}
+		}
+
+		.form-control.is-invalid, .was-validated .form-control:invalid{ background-image: url(img/close.svg); }
+		.form-control.is-valid, .was-validated .form-control:valid{ background-image: url(img/check.svg); }
+	</style>
+
+	<div class="container d-print-none" >
+		<h1 class="display-4 text-center mt-3">Guía para Pagos Varios - SUNAT.</h1>
+	</div>
+	<div class="container-fluid mt-3 noSelect " id="app">
+		<div class="row">
+			<div class="col-md-4 d-print-none">
+				<p>Rellene su formulario:</p>
+				<select id="sltTributoX" class="form-control" name="" v-model="tributoX">
+					<option selected disabled value="-1">¿Qué tibuto se pagará?</option>	
+					<option value="1">Tributos (Inc. Órdenes de pago y Resoluciones)</option>	
+					<option value="2">Multas (Inc. Nuevo Régimen Único Simplificado)</option>
+					<option value="3">Costos y Gastos Administrativos</option>
+					<option value="4">Fraccionamientos (Art. 36 Cód. Tributario, D. Leg. 848, PERT, PERTA, REFT, SEAP, RESIT)</option>
+				</select>
+				<input type="text" class="form-control" :class="{'is-invalid': rucMal, 'is-valid': !rucMal}" id="txtRuc" placeholder="Número de R.U.C." autocomplete="off" v-model="ruc" max_length="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+				<input type="text" id="txtPeriodo" class="form-control" placeholder="Mes y Año" readonly>
+				<div class="input-group my-4">
+					<div class="input-group-prepend">
+						<span class="input-group-text">S/</span>
+					</div>
+					<input type="number" class="form-control" id="txtMontoAPagar" placeholder="Monto a pagar" step=1 v-model="monto">
+					
+				</div>
+
+				<div id="divComboBusqueda">
+					<select id="sltTributos" class="form-control selectpicker" data-live-search="true" title="Cod. Tributo, concepto o multa" v-model="tipTributo">
+						<option value="1011">1011: IGV - CUENTA PROPIA</option>
+						<option value="1012">1012: IGV - LIQUID. DE COMPRAS RETENCIONES</option>
+						<option value="1032">1032: IGV - REG. PROVEEDORES - RETENCIONES</option>
+						<option value="1041">1041: IGV - UTILIZACIÓN SERVICIOS PRESTADOS NO DOMICILIADOS</option>
+						<option value="1052">1052: IGV - RÉGIMEN DE PERCEPCIÓN</option>
+						<option value="1054">1054: IGV - PERCEPCIÓN VENTAS INTERNAS</option>
+						<option value="2011">2011: ISC - APENDICE III - COMBUSTIBLES</option>
+						<option value="2021">2021: ISC - APENDICE IV - PRODUCTOS A LA TASA DEL 10%</option>
+						<option value="2031">2031: ISC - APENDICE IV - PRODUCTOS A LA TASA DEL 17%</option>
+						<option value="2034">2034: ISC - APENDICE IV - PRODUCTOS A LA TASA DEL 20%</option>
+						<option value="2041">2041: ISC - APENDICE IV - PRECIO DE VENTA AL PÚBLICO</option>
+						<option value="2044">2044: ISC - APENDICA IV - PRODUCTOS A LA TASA DEL 45%</option>
+						<option value="2051">2051: ISC - APENDICE IV - CERVEZAS-SIST.ESPECÍFICO</option>
+						<option value="2054">2054: ISC - APENDICE IV - PRODUCTOS A LA TASA DEL 30%</option>
+						<option value="2055">2055: ISC - OTRAS TASAS</option>
+						<option value="2072">2072: ISC - APENDICE IV - LOTERÍAS, BINGOS, RIFAS</option>
+						<option value="2074">2074: ISC - APENDICE IV - EVENTOS HÍPICOS</option>
+						<option value="3011">3011: IMPUESTO A LA RENTA - CTA. PROPIA 1RA CATEGORÍA</option>
+						<option value="3021">3021: IMPUESTO A LA RENTA - CTA. PROPIA 2DA CATEGORÍA</option>
+						<option value="3031">3031: IMPUESTO A LA RENTA - CTA. PROPIA 3RA CATEGORÍA</option>
+						<option value="3038">3038: IMPUESTO TEMPORAL A LOS ACTIVOS NETOS</option>
+						<option value="3041">3041: IMPUESTO A LA RENTA - CTA. PROPIA 4TA CATEGORÍA</option>
+						<option value="3022">3022: IMPUESTO A LA RENTA - RETENCIONES 2DA CATEGORÍA</option>
+						<option value="3042">3042: IMPUESTO A LA RENTA - RETENCIONES 4TA CATEGORÍA</option>
+						<option value="3052">3052: IMPUESTO A LA RENTA - RETENCIONES 5TA CATEGORÍA</option>
+						<option value="3111">3111: IMPUESTA A LA RENTA - RÉGIMEN ESPECIAL (RER)</option>
+						<option value="3121">3121: IMPUESTA A LA RENTA - RÉGIMEN MYPE TRIBUTARIO</option>
+						<option value="3311">3311: IMPUESTA A LA RENTA - RÉGIMEN AMAZONÍA</option>
+						<option value="3411">3411: IMPUESTA A LA RENTA - RÉGIMEN AGRARIOS D.LEG 885</option>
+						<option value="3611">3611: IMPUESTA A LA RENTA - RÉGIMEN FRONTERA</option>
+						<option value="3035">3035: IMPUESTO A LA RENTA - ANTICIPO ADICIONAL A LA RENTA</option>
+						<option value="3036">3036: IMPUESTO A LA RENTA - DISTRIBUCIÓN DIVIDENDOS</option>
+						<option value="3062">3062: IMPUESTO A LA RENTA - NO DOMICILIADOS - RETENCIONES</option>
+						<option value="3071">3071: IMPUESTO A LA RENTA - REGULARIZACIÓN - OTRAS CATEGORÍAS</option>
+						<option value="3081">3081: IMPUESTO A LA RENTA - REGULARIZACIÓN - TERCERA CATEGORÍA</option>
+						<option value="4131">4131: NUEVO RUS - CATEGORÍA 1</option>
+						<option value="4132">4132: NUEVO RUS - CATEGORÍA 2</option>
+						<option value="4133">4133: NUEVO RUS - CATEGORÍA 3</option>
+						<option value="4134">4134: NUEVO RUS - CATEGORÍA 4</option>
+						<option value="4135">4135: NUEVO RUS - CATEGORÍA 5</option>
+						<option value="5081">5081: IES - CUENTA PROPIA</option>
+						<option value="5082">5082: IES - CUENTA TERCEROS</option>
+						<option value="5083">5083: IES - TRABAJADORES INDEPENDIENTES</option>
+						<option value="5084">5084: IES - RETENC. CONSTRUCTORAS Y PROVEEDORAS</option>
+						<option value="5210">5210: ESSALUD - SEGURO REGULAR - LEY 26790</option>
+						<option value="5211">5211: ESSALUD - SEGURO COMPLEMENTARIO DE TRABAJO RIESGO</option>
+						<option value="5214">5214: ESSALUD VIDA</option>
+						<option value="5222">5222: ESSALUD - SEGURO AGRARIO</option>
+						<option value="5410">5410: ESSALUD - FONDO DERECHOS SOCIALES DEL ARTISTA</option>
+						<option value="5310">5310: ONP - PENSIONES LEY 19990</option>
+						<option value="8023">8023: FRACCIONAMIENTO D. LEG. 848 - TESORO</option>
+						<option value="8021">8021: FRACCIONAMIENTO ART. 36º C.T. - TESORO</option>
+						<option value="8045">8045: FRACCIONAMIENTO FEN. DEL NIÑO - TESORO</option>
+						<option value="8041">8041: FRACCIONAMIENTO INDECOPI - TESORO</option>
+						<option value="8111">8111: FRACCIONAMIENTO PERTA - TESORO</option>
+						<option value="8026">8026: FRACCIONAMIENTO REFT - TESORO</option>
+						<option value="8027">8027: FRACCIONAMIENTO SEAP - TESORO</option>
+						<option value="8028">8028: FRACCIONAMIENTO RESIT - TESORO</option>
+						<option value="5215">5215: FRACCIONAMIENTO D. LEG. 848 - ESSALUD</option>
+						<option value="5216">5216: FRACCIONAMIENTO ART. 36º C.T. - ESSALUD</option>
+						<option value="5217">5217: FRACCIONAMIENTO FEN. DEL NIÑO - ESSALUD</option>
+						<option value="5218">5218: FRACCIONAMIENTO INDECOPI - ESSALUD</option>
+						<option value="5219">5219: FRACCIONAMIENTO PERTA - ESSALUD</option>
+						<option value="5229">5229: FRACCIONAMIENTO REFT - ESSALUD</option>
+						<option value="5232">5232: FRACCIONAMIENTO SEAP - ESSALUD</option>
+						<option value="5233">5233: FRACCIONAMIENTO RESIT - ESSALUD</option>
+						<option value="5227">5227: FRACCIONAMIENTO LEY 27100 - ESSALUD</option>
+						<option value="5314">5314: FRACCIONAMIENTO D. LEG. 848 - ONP</option>
+						<option value="5315">5315: FRACCIONAMIENTO ART. 36º C.T. - ONP</option>
+						<option value="5316">5316: FRACCIONAMIENTO FEN. DEL NIÑO - ONP</option>
+						<option value="5317">5317: FRACCIONAMIENTO INDECOPI - ONP</option>
+						<option value="5319">5319: FRACCIONAMIENTO PERTA - ONP</option>
+						<option value="5328">5328: FRACCIONAMIENTO REFT - ONP</option>
+						<option value="5329">5329: FRACCIONAMIENTO SEAP - ONP</option>
+						<option value="5330">5330: FRACCIONAMIENTO RESIT - ONP</option>
+						<option value="5327">5327: FRACCIONAMIENTO LEY 27100 - ONP</option>
+						<option value="7033">7033: FRACCIONAMIENTO D. LEG. 848 - SENCICO</option>
+						<option value="8043">8043: FRACCIONAMIENTO INDECOPI - SENCICO</option>
+						<option value="7036">7036: FRACCIONAMIENTO REFT - SENCICO</option>
+						<option value="7037">7037: FRACCIONAMIENTO SEAP - SENCICO</option>
+						<option value="7038">7038: FRACCIONAMIENTO RESIT - SENCICO</option>
+						<option value="5051">5051: FRACCIONAMIENTO D. LEG. 848 - FONAVI</option>
+						<option value="5031">5031: FRACCIONAMIENTO ART. 36º C.T. - FONAVI</option>
+						<option value="5071">5071: FRACCIONAMIENTO FEN. DEL NIÑO - FONAVI</option>
+						<option value="8042">8042: FRACCIONAMIENTO INDECOPI - FONAVI</option>
+						<option value="5041">5041: FRACCIONAMIENTO PERTA - FONAVI</option>
+						<option value="5056">5056: FRACCIONAMIENTO REFT - FONAVI</option>
+						<option value="5057">5057: FRACCIONAMIENTO SEAP - FONAVI</option>
+						<option value="5058">5058: FRACCIONAMIENTO RESIT - FONAVI</option>
+						<option value="5021">5021: FRACCIONAMIENTO PERT - FONAVI</option>
+						<option value="5220">5220: OTROS FRACCIONAMIENTOS ESSALUD</option>
+						<option value="5230">5230: FRACCIONAMIENTO ART.36º C.T. ESSALUD - AGRARIO</option>
+						<option value="5512">5512: FRACCIONAMIENTO D.LEG 848 - ACCIDENTES DE TRABAJO</option>
+						<option value="8081">8081: FRACCIONAMIENTO PERT</option>
+						<option value="8061">8061: COSTAS PROCESALES</option>
+						<option value="8062">8062: GASTOS DE COMISO, INTERN. O REMATE DE BIENES COMISADOS</option>
+						<option value="8063">8063: GASTOS ADMINISTRATIVOS – COBRANZA COACTIVA</option>
+						<option value="1016">1016: ARROZ PILADO - IVAP</option>
+						<option value="5612">5612: CONTRIBUCIÓN SOLIDARIA DL 28046</option>
+						<option value="7011">7011: IMPUESTO AL RODAJE</option>
+						<option value="7021">7021: IMPUESTO DE PROMOCIÓN MUNICIPAL</option>
+						<option value="7031">7031: SENCICO</option>
+						<option value="7101">7101: IMPUESTO A LAS ACCIONES DEL ESTADO</option>
+						<option value="7111">7111: IMPUESTO A LOS CASINOS (3)</option>
+						<option value="7121">7121: IMPUESTO A LAS MÁQUINAS TRAGAMONEDAS (3)</option>
+						<option value="7131">7131: PROMOC. TURÍSTICO - LEY 27889</option>
+						<option value="8131">8131: ITF CUENTA PROPIA</option>
+						<option value="8132">8132: ITF RETENCIÓN</option>
+						<option value="6011">6011: MULTA - NO INSCRIPCIÓN EN LOS REGISTROS DE LA ADMINIST.</option>
+						<option value="6013">6013: MULTA - INSCRIPCIÓN CON DATOS FALSOS.</option>
+						<option value="6018">6018: MULTA - NO EMITIR Y/O NO OTORGAR COMPROBANTES DE PAGO</option>
+						<option value="6021">6021: MULTA - EMITIR Y/U OTORGAR COMPROBANTES DE PAGO QUE NO CORRESPONDAN AL RÉGIMEN O AL TIPO DE OPERACIÓN.</option>
+						<option value="6024">6024: MULTA - NO OBTENER COMPROBANTE DE PAGO POR LAS COMPRAS EFECTUADAS.</option>
+						<option value="6045">6045: MULTA - NO OBTENER COMPROB. POR LOS SERVICIOS OBTENIDOS.</option>
+						<option value="6031">6031: MULTA NO LLEVAR LIBROS CONTABLES U OTROS REGISTROS EXIGIDOS - TESORO</option>
+						<option value="6033">6033: MULTA NO REGISTRAR INGRESOS, RENTAS, PATRIMONIO, VENTAS, REMUNERACIONES O REGISTRARLOS POR MONTOS INFERIORES.</option>
+						<option value="6035">6035: MULTA LLEVAR CON ATRASO LOS LIBROS Y REGISTROS.</option>
+						<option value="6037">6037: MULTA NO CONSERVAR LIBROS Y DOCUMENTACIÓN SUSTENTATORIA - TESORO</option>
+						<option value="6073">6073: MULTA PRESENTAR LAS DECLARAC. EN FORMA Y/O CONDICIONES DISTINTAS A LAS ESTABLECIDAS - TESORO</option>
+						<option value="6074">6074: MULTA PRESENTAR DECLAR.EN LUGARES DISTINTOS A ESTABLECIDOS - TESORO</option>
+						<option value="6075">6075: MULTA NO EXHIBIR LOS LIBROS, REGISTROS QUE LA ADM.TRIB.SOLICITE - TESORO</option>
+						<option value="6079">6079: MULTA REABRIR INDEBIDAMENTE EL LOCAL U OFICINA CERRADO.</option>
+						<option value="6083">6083: MULTA PROPORCIONAR INFORMACIÓN FALSA - TESORO</option>
+						<option value="6084">6084: MULTA NO COMPARECER O COMPARECER FUERA DE PLAZO - TESORO</option>
+						<option value="6086">6086: MULTA OCULTAR O DESTRUIR AVISOS DE SUNAT - TESORO</option>
+						<option value="6095">6095: MULTA AUTORIZAR LIBROS, REGISTROS VINCULADOS A ASUNTOS TRIBUTARIOS SIN SEGUIR EL PROCEDIMIENTO ESTABLECIDO.</option>
+						<option value="6117">6117: MULTA NO ENTREGAR CERTIFICADOS DE RETENCIÓN O PERCEPCIÓN, ASÍ COMO DE RENTAS Y RETENCIONES.</option>
+						<option value="6118">6118: MULTA NO ENTREGAR A LA SUNAT EL MONTO RETENIDO POR EMBARGO.</option>
+						<option value="6131">6131: MULTA RECUPERACIÓN DE MERCADERÍA COMISADA</option>
+						<option value="6151">6151: MULTA NO FACILITAR EL CONTROL DEL TRASLADO DE BIENES</option>
+						<option value="6171">6171: MULTA ADQUISICIONES SIN DEPÓSITO - LEY NO. 27877</option>
+						<option value="6172">6172: MULTA PROV. EFECTÚA RETIRO SIN DEPÓSITO - LEY NO. 27877</option>
+						<option value="6173">6173: MULTA PROV. PERMITE RETIRO SIN DEPÓSITO - LEY NO. 27877</option>
+						<option value="6174">6174: MULTA SUJETO CUENTA PROV. ENTREGA BIEN SIN DEPÓSITO - LEY NO. 27877</option>
+						<option value="6532">6532: MULTA ESSALUD-MULTAS PERÍODOS TRIBUTARIOS ANT. A JULIO 1999</option>
+						<option value="6533">6533: MULTA ONP - OTRAS MULTAS</option>
+						<option value="6535">6535: MULTA SENCICO - OTRAS MULTAS</option>
+						<option value="6431">6431: MULTA NO LLEVAR LIBROS CONTABLES U OTROS REGISTROS EXIGIDOS - ESSALUD / ONP</option>
+						<option value="6437">6437: MULTA NO CONSERVAR LIBROS Y DOCUMENTACIÓN SUSTENTATORIA  - ESSALUD / ONP</option>
+						<option value="6473">6473: MULTA PRESENTAR LAS DECLARAC. EN FORMA Y/O CONDICIONES DISTINTAS A LAS ESTABLECIDAS - ESSALUD / ONP</option>
+						<option value="6474">6474: MULTA PRESENTAR DECLAR.EN LUGARES DISTINTOS A ESTABLECIDOS - ESSALUD / ONP</option>
+						<option value="6475">6475: MULTA NO EXHIBIR LOS LIBROS, REGISTROS QUE LA ADM.TRIB.SOLICITE - ESSALUD / ONP</option>
+						<option value="6483">6483: MULTA PROPORCIONAR INFORMACIÓN FALSA - ESSALUD / ONP</option>
+						<option value="6484">6484: MULTA NO COMPARECER O COMPARECER FUERA DE PLAZO - ESSALUD / ONP</option>
+						<option value="6486">6486: MULTA OCULTAR O DESTRUIR AVISOS DE SUNAT - ESSALUD / ONP</option>
+						<option value="6041">6041: MULTA NO PRESENTAR LA DJ EN LOS PLAZOS ESTABLECIDOS. - TESORO</option>
+						<option value="6051">6051: MULTA NO PRESENTAR OTRAS DECL. O COMUN. DENTRO DEL PLAZO. - TESORO</option>
+						<option value="6061">6061: MULTA PRESENTAR LAS DECLAR.JURADAS EN FORMA INCOMPLETA. - TESORO</option>
+						<option value="6064">6064: MULTA PRESENTAR OTRAS DECL.O COMUN.EN FORMA INCOMPLETA. - TESORO</option>
+						<option value="6071">6071: MULTA PRESENTAR MÁS DE UNA RECTIF. MISMO TRIB. Y PERIODO. - TESORO</option>
+						<option value="6072">6072: MULTA PRESENTAR MÁS DE UNA RECTIFICATORIA DE OTRAS COMUNICACIONES POR EL MISMO CONCEPTO Y PERÍODO. - TESORO</option>
+						<option value="6089">6089: MULTA NO RETENER O NO PERCIBIR TRIBUTOS ESTABLECIDOS. - TESORO</option>
+						<option value="6091">6091: MULTA DECLARAR CIFRAS O DATOS FALSOS, Y/O OBTENER. INDEBIDAMENTE NOTAS DE CRÉDITO NEGOCIABLES. - TESORO</option>
+						<option value="6111">6111: MULTA RETEN. O PERCEPCIONES NO PAGADAS EN PLAZOS ESTAB. - TESORO</option>
+						<option value="6113">6113: MULTA NO PAGAR EN LAS FORMAS Y CONDICIONES ESTABLEC., CUANDO SE HUBIERA EXIMIDO DE PRESENTAR LA DJ. - TESORO</option>
+						<option value="6441">6441: MULTA NO PRESENTAR LA DJ EN LOS PLAZOS ESTABLECIDOS. - ESSALUD / ONP</option>
+						<option value="6451">6451: MULTA NO PRESENTAR OTRAS DECL. O COMUN. DENTRO DEL PLAZO. - ESSALUD / ONP</option>
+						<option value="6461">6461: MULTA PRESENTAR LAS DECLAR.JURADAS EN FORMA INCOMPLETA. - ESSALUD / ONP</option>
+						<option value="6464">6464: MULTA PRESENTAR OTRAS DECL.O COMUN.EN FORMA INCOMPLETA. - ESSALUD / ONP</option>
+						<option value="6471">6471: MULTA PRESENTAR MÁS DE UNA RECTIF. MISMO TRIB. Y PERIODO. - ESSALUD / ONP</option>
+						<option value="6472">6472: MULTA PRESENTAR MÁS DE UNA RECTIFICATORIA DE OTRAS COMUNICACIONES POR EL MISMO CONCEPTO Y PERÍODO. - ESSALUD / ONP</option>
+						<option value="6489">6489: MULTA NO RETENER O NO PERCIBIR TRIBUTOS ESTABLECIDOS. - ESSALUD / ONP</option>
+						<option value="6491">6491: MULTA DECLARAR CIFRAS O DATOS FALSOS, Y/O OBTENER. INDEBIDAMENTE NOTAS DE CRÉDITO NEGOCIABLES. - ESSALUD / ONP</option>
+						<option value="6411">6411: MULTA RETEN. O PERCEPCIONES NO PAGADAS EN PLAZOS ESTAB. - ESSALUD / ONP</option>
+					</select>
+				</div>
+			
+				<div>
+					<button class="btn btn-outline-primary my-2" v-on:click="imprimir()"><i class="icofont-print"></i> Imprimir</button>
+					<button class="btn btn-outline-secondary my-2" v-on:click="guardar()"><i class="icofont-file-pdf"></i> Guardar PDF</button>
+					<button class="btn btn-outline-warning my-2 d-none"><i class="icofont-mail"></i> Correo electrónico</button>
+					<button class="btn btn-outline-success my-2 d-none"><i class="icofont-share"></i> Compartir</button>
+				</div>
+
+				
+			</div>
+			
+			<div class="col-12 col-md mt-3">
+				<div id="divImagen">
+					<img class="img-fluid" src="img/plantilla_sunat.png" alt="">
+					<span class="tFlotante " :class="{'d-none': tributoX!=1}" id="primX"><i class="icofont-close"></i></span>
+					<span class="tFlotante " :class="{'d-none': tributoX!=2}" id="seguX"><i class="icofont-close"></i></span>
+					<span class="tFlotante " :class="{'d-none': tributoX!=3}" id="tercX"><i class="icofont-close"></i></span>
+					<span class="tFlotante " :class="{'d-none': tributoX!=4}" id="cuarX"><i class="icofont-close"></i></span>
+					<span class="tFlotante" id="rucX"><strong>{{ruc}}</strong></span>
+					<span class="tFlotante" id="mesX"><strong>{{mes}}</strong></span>
+					<span class="tFlotante" id="anioX"><strong>{{anio}}</strong></span>
+					<span class="tFlotante" id="tribX"><strong>{{tipTributo}}</strong></span>
+					<span class="tFlotante" id="montX"><strong><span id="entero">{{Math.trunc(monto)}}</span><span id="decimales">{{parDecimal()}}</span>	</strong></span>
+				</div>
+			</div>
+		</div>
+		<div class="row d-none">
+			<div class="col">
+				<iframe id="iframePDF" frameborder="0" width="500" height="400"></iframe>
+			</div>
+		</div>
+		
+	</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.es.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/imagen.js"></script>
+<script src="js/jspdf.min.js"></script>
+
+<script>
+	var doc = new jsPDF('p', 'px','a4');
+	var app = new Vue({
+		el: '#app',
+		data: {
+			ruc: '', monto: 0.00, mes:'', anio:'',
+			tributoX: -1, tipTributo:'',
+			rucMal: true,
+		},
+		methods:{
+			parDecimal(){
+				let dec = this.monto % Math.trunc(this.monto)
+				if (isNaN(dec)){
+					return '.00';}
+				else{
+					let entero = Math.trunc(this.monto);
+					let dec = parseFloat(( this.monto - entero )).toFixed(2)*100;
+					let fin = Math.trunc(dec);
+					//console.log( Math.trunc(dec) );
+					if(fin==0 ){
+						return '.00';
+					}else{
+						return '.'+Math.trunc(dec);
+					}
+				}
+			},
+			validar(){
+				if( this.tributoX==-1){ $('#sltTributoX').addClass('is-invalid'); return false; }
+				else if( this.ruc=='' || this.ruc.length<11 || this.rucMal ){ this.rucMal = true; return false; }
+				else if( this.tipTributo==''){ return false; }
+				else if( parseFloat(this.monto)==0){ return false; }
+				else{
+					$('#sltTributoX').removeClass('is-invalid');
+					$('#sltTributoX').addClass('is-valid');
+					return true;
+				}
+			},
+			imprimir(){ if( this.validar() ){ this.generarPdf(); this.autoLoad(); } },
+			guardar(){ if( this.validar() ){ this.generarPdf(); this.guardarPDF(); } },
+			generarPdf(){
+				doc.addFont('ArialMS', 'Arial', 'normal');
+				var imgData = $.imagen;
+				doc.addImage(imgData, 'JPEG',  10, 10, 400, 310)
+				doc.setFontSize(9);
+				
+				switch (this.tributoX) {
+					case 1:
+					case '1': doc.text("X", 34, 91); break;
+					case 2:
+					case '2': doc.text("X", 34, 99.5); break;
+					case 3:
+					case '3': doc.text("X", 34, 109); break;
+					case 4:
+					case '4': doc.text("X", 34, 117); break;
+				
+					default:
+						break;
+				}
+				doc.setFont("Arial");
+				doc.setFontType("bold");
+				doc.setFontSize(14);
+				doc.text(this.ruc, 130, 141);
+				doc.text(this.ruc, 130, 141);
+				doc.text(this.mes, 135, 170);
+				doc.text(this.anio, 165, 170);
+				if( this.tipTributo>-1){
+					doc.text(this.tipTributo.toString(), 135, 188);
+				}
+				doc.text(parseFloat(this.monto).toFixed(2), 135, 211);
+				doc.setFontSize(11);
+				doc.text('Infocat Soluciones - Facturación electrónica Pago único en: infocatsoluciones.com', 20, 320);
+				
+				//abre autoprint pero en otra pestaña
+				/*doc.autoPrint();
+				window.open(doc.output('bloburl')); */
+			},
+			autoLoad(){
+				/*Auto Load*/
+				doc.autoPrint();
+				var iframe = document.getElementById('iframePDF');
+				iframe.src = doc.output('dataurlstring');
+			},
+			guardarPDF(){
+			//Guarda el PDF
+				doc.save("Guía para pagos_"+this.ruc+".pdf");
+			}
+		},
+		watch:{
+			ruc: function(newVal, oldVal){
+				if( this.ruc.length>11){
+					this.ruc = oldVal;
+					this.rucMal = true;
+				}
+				else if(this.ruc.length<11){
+					this.rucMal = true;
+				}else{
+					let inicio = this.ruc.substring(0,2);
+					if( inicio =='20' || inicio =='10' ){
+						this.rucMal = false;
+					}else{
+						this.rucMal = true;
+					}
+				}
+			}
+		},
+		mounted(){
+			$('#sltTributos').selectpicker('reload');
+			$('#sltTributos').selectpicker('val', -1);
+			var d = new Date();
+			let mo = d.getMonth();
+			
+			if(mo<10){ mo = '0'+mo;}
+			this.mes = mo;
+			this.anio = d.getFullYear().toString();
+			$('#txtPeriodo').val(  mo + '-'+d.getFullYear() );
+			$('#txtPeriodo').datepicker({
+				format: "mm-yyyy",
+				startView: 1,
+				minViewMode: 1,
+				maxViewMode: 2,
+				language: "es",
+				autoclose: true,
+				toggleActive: true,
+			});
+			$('#app').on('change', '#txtPeriodo', function (e) {
+				let tempo = $('#txtPeriodo').val()
+				app.mes = tempo.substring(0,2);
+				app.anio = tempo.substring(3,7);
+			});
+		}
+	});
+
+
+</script>
+</body>
+</html>
+
